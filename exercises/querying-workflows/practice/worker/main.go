@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	queries "interacting/exercises/querying-workflows/solution"
+	queries "interacting/exercises/querying-workflows/practice"
 
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/worker"

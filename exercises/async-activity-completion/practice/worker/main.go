@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	async "interacting/exercises/async-activity-completion/solution"
+	async "interacting/exercises/async-activity-completion/practice"
 
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/worker"
