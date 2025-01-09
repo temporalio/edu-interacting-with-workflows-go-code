@@ -23,7 +23,7 @@ func main() {
 	// TODO Part D: Call `SignalWorkflow()` to send a Signal to your running Workflow.
 	// It needs, as arguments, `context.Background()`, your workflow ID, your run ID
 	// (which can be an empty string), the name of the signal, and the signal instance.
-	// It should assign its result to `err` so that it can be checked in the next line.
+	// It should assign its second result to `err` so that it can be checked in the next line.
 	if err != nil {
 		log.Fatalln("Error sending the Signal", err)
 		return
