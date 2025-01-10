@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	queries "interacting/exercises/querying-workflows/solution"
+	queries "interacting/exercises/querying-workflows/practice"
 
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/worker"
@@ -16,7 +16,7 @@ func main() {
 	}
 	defer c.Close()
 
-	w := worker.New(c, "queries", worker.Options{})
+	w := worker.New(c, "queries-task-queue", worker.Options{})
 
 	w.RegisterWorkflow(queries.Workflow)
 	w.RegisterActivity(queries.Activity)

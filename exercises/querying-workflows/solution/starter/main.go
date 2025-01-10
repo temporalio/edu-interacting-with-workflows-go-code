@@ -17,8 +17,8 @@ func main() {
 	defer c.Close()
 
 	workflowOptions := client.StartWorkflowOptions{
-		ID:        "queries",
-		TaskQueue: "queries",
+		ID:        "queries-workflow-id",
+		TaskQueue: "queries-task-queue",
 	}
 
 	we, err := c.ExecuteWorkflow(

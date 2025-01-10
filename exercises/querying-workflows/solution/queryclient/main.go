@@ -14,7 +14,7 @@ func main() {
 	}
 	defer c.Close()
 
-	response, err := c.QueryWorkflow(context.Background(), "queries", "", "current_state")
+	response, err := c.QueryWorkflow(context.Background(), "queries-workflow-id", "", "current_state")
 	if err != nil {
 		log.Fatalln("Error sending the Query", err)
 		return
