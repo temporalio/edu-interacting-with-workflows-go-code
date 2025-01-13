@@ -18,7 +18,7 @@ This exercise contains one Client that runs two different Workflows
 — `PizzaWorkflow` and `FulfillOrderWorkflow`. Both Workflows are defined in
 `workflow.go`. `PizzaWorkflow` is designed not to complete its final activity
 — `SendBill` — until it receives a Signal from `FulfillOrderWorkflow`. You'll
-start by defining that Signal. 
+start by defining that Signal.
 
 1. Edit `workflow.go`. Near the top of the file,
    after the `import()` block and before your Workflow definitions, create a
@@ -29,12 +29,12 @@ start by defining that Signal.
 ## Part B: Handling the Signal
 
 Next, you need to enable your `PizzaWorkflow` to receive a Signal from
-`FulfillOrderWorkflow`. 
+`FulfillOrderWorkflow`.
 
 After `var confirmation OrderConfirmation`, define a
 Signal Channel, and use `signalChan.Receive()` to block the Workflow until it
 receives a Signal, after which it can proceed with the logic contained in
-`if receivedSignal.Fulfilled == true{}`. 
+`if receivedSignal.Fulfilled == true{}`.
 
 1. Create a `var` named `receivedSignal` that is an instance
    of `FulfillOrderSignal`. This is the Signal that
@@ -62,7 +62,7 @@ complete the Workflow. To do this, you need call
    Signal,`fulfill-order-signal`. For `SignalExternalWorkflow` calls to block
    and return properly in Go, you also need to append `.Get(ctx,
    [return-value-pointer])` to a `SignalExternalWorkflow` call, though
-   `[return-value-pointer]` can be `nil` here. 
+   `[return-value-pointer]` can be `nil` here.
    @@@@@ the course content doesn't say anything about this `.Get`. @@@@
 3. Save and close the file.
 
