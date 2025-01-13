@@ -47,7 +47,7 @@ func PizzaWorkflow(ctx workflow.Context, order PizzaOrder) (OrderConfirmation, e
 	// and assign it to a variable like `signalChan`. After that, add
 	// `signalChan.Receive(ctx, &receivedSignal)` on the following line.
 
-	if receivedSignal.Fulfilled {
+	if receivedSignal.Fulfilled == true {
 		bill := Bill{
 			CustomerID:  order.Customer.CustomerID,
 			OrderNumber: order.OrderNumber,
