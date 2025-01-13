@@ -14,53 +14,66 @@ the complete version in the `solution` subdirectory.
 
 ## Part A: Defining a Signal
 
-1. This exercise contains one Client that runs two different Workflows
-   — `PizzaWorkflow` and `FulfillOrderWorkflow`. Both Workflows are defined in
-   `workflow.go`. `PizzaWorkflow` is designed not to complete its final activity
-   — `SendBill` — until it receives a Signal from `FulfillOrderWorkflow`. You'll
-   start by defining that Signal. Edit `workflow.go`. Near the top of the file,
+This exercise contains one Client that runs two different Workflows
+— `PizzaWorkflow` and `FulfillOrderWorkflow`. Both Workflows are defined in
+`workflow.go`. `PizzaWorkflow` is designed not to complete its final activity
+— `SendBill` — until it receives a Signal from `FulfillOrderWorkflow`. You'll
+start by defining that Signal.
+
+1. Edit `workflow.go`. Near the top of the file,
    after the `import()` block and before your Workflow definitions, create a
    type of `struct{}` named `FulfillOrderSignal` that contains a single `bool`
    named `Fulfilled`.
-2. Next, directly below that, create a `var` named `signal` that is an instance
-   of `FulfillOrderSignal` with `Fulfilled: true`. This is the Signal that
-   `FulfillOrderWorkflow` will send to `PizzaWorkflow`.
-3. Save the file.
+2. Save the file.
 
 ## Part B: Handling the Signal
 
-1. Next, you need to enable your `PizzaWorkflow` to receive a Signal from
-   `FulfillOrderWorkflow`. After `var confirmation OrderConfirmation`, define a
-   Signal Channel, and use `signalChan.Receive()` to block the Workflow until it
-   receives a Signal, after which it can proceed with the logic contained in `if
-   signal.Fulfilled == true{}`. Begin by adding a call to
-   `workflow.GetSignalChannel(ctx, "fulfill-order-signal")` and assign it to
-   a variable like `signalChan`.
-2. After that, add `signalChan.Receive(ctx, &signal)` on the following line.
-3. Save the file.
+Next, you need to enable your `PizzaWorkflow` to receive a Signal from
+`FulfillOrderWorkflow`.
+
+After `var confirmation OrderConfirmation`, define a
+Signal Channel, and use `signalChan.Receive()` to block the Workflow until it
+receives a Signal, after which it can proceed with the logic contained in
+`if receivedSignal.Fulfilled == true{}`.
+
+1. Create a `var` named `receivedSignal` that is an instance
+   of `FulfillOrderSignal`. This is the Signal that
+   `PizzaWorkflow` will receive from `FulfillOrderWorkflow`.
+2. Add `signalChan := workflow.GetSignalChannel(ctx, "fulfill-order-signal")`.
+3. On the following line, add `signalChan.Receive(ctx, &receivedSignal)`.
+4. Save the file.
 
 ## Part C: Signaling your Workflow
 
-1. Near the bottom of `workflow.go`, within `FulfillOrderWorkflow`, you will
-   notice that it runs two Activities — `MakePizzas` and `DeliverPizzas`. After
-   those Activities complete successfuly, the next step should be to send a
-   Signal to the `PizzaWorkflow` that it is time to bill the customer and
-   complete the Workflow. To do this, you need call
-   `workflow.SignalExternalWorkflow()`.
-2. Add this call to the end of `FulfillOrderWorkflow`. `SignalExternalWorkflow`
-   needs, as arguments, the `ctx` Workflow context, Workflow ID (which should be
+Near the bottom of `workflow.go`, within `FulfillOrderWorkflow`, you will
+notice that it runs two Activities — `MakePizzas` and `DeliverPizzas`. After
+those Activities complete successfuly, the next step should be to send a
+Signal to the `PizzaWorkflow` that it is time to bill the customer and
+complete the Workflow. To do this, you need call
+`workflow.SignalExternalWorkflow()`.
+
+1. Create a `var` named `signalToSend` that is an instance
+   of `FulfillOrderSignal` with `Fulfilled: true`. This is the Signal that
+   `FulfillOrderWorkflow` will send to `PizzaWorkflow`.
+2. Add a call to `workflow.SignalExternalWorkflow()` at the end of `FulfillOrderWorkflow`. `SignalExternalWorkflow`
+   needs the following as arguments: the `ctx` Workflow context, Workflow ID (which should be
    `pizza-workflow-order-Z1238`), an optional Run ID (which you can omit by
-   providing "" as the next argument), and the name of the
+   providing "" as the argument), and the name of the
    Signal,`fulfill-order-signal`. For `SignalExternalWorkflow` calls to block
    and return properly in Go, you also need to append `.Get(ctx,
    [return-value-pointer])` to a `SignalExternalWorkflow` call, though
    `[return-value-pointer]` can be `nil` here.
+   @@@@@ the course content doesn't say anything about this `.Get`. @@@@
 3. Save and close the file.
 
 ## Part D: Making your Client start both Workflows
 
-1. Finally, open `start/main.go` for editing. Currently, this Client only starts
-   the `PizzaWorkflow`. Directly after the `c.ExecuteWorkflow()` call for the
+1. Finally, open `start/main.go` for editing.
+
+Currently, this Client only starts
+the `PizzaWorkflow`.
+
+2. Directly after the `c.ExecuteWorkflow()` call for the
    `PizzaWorkflow`, add another call that starts the `FulfillOrderWorkflow`. You
    can use the call that starts the `PizzaWorkflow` and the
    `signalFulfilledOptions` block as a reference. Don't forget to capture the

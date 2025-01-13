@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	queries "interacting/exercises/querying-workflows/solution"
+	queries "interacting/exercises/querying-workflows/practice"
 
 	"go.temporal.io/sdk/client"
 )
@@ -17,8 +17,8 @@ func main() {
 	defer c.Close()
 
 	workflowOptions := client.StartWorkflowOptions{
-		ID:        "queries",
-		TaskQueue: "queries",
+		ID:        "queries-workflow-id",
+		TaskQueue: "queries-task-queue",
 	}
 
 	we, err := c.ExecuteWorkflow(

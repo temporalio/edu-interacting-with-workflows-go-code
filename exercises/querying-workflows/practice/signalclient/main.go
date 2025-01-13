@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	queries "interacting/exercises/querying-workflows/solution"
+	queries "interacting/exercises/querying-workflows/practice"
 
 	"go.temporal.io/sdk/client"
 )
@@ -20,7 +20,7 @@ func main() {
 		Fulfilled: true,
 	}
 
-	err = c.SignalWorkflow(context.Background(), "queries", "", "fulfill-order-signal", signal)
+	err = c.SignalWorkflow(context.Background(), "queries-workflow-id", "", "fulfill-order-signal", signal)
 	if err != nil {
 		log.Fatalln("Error sending the Signal", err)
 		return

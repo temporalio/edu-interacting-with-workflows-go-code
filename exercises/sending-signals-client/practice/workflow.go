@@ -26,8 +26,8 @@ func Workflow(ctx workflow.Context, input string) (string, error) {
 	signalChan := workflow.GetSignalChannel(ctx, "fulfill-order-signal")
 	signalChan.Receive(ctx, &signal)
 	// TODO Part B: Wrap the `ExecuteActivity()`` call and the `logger.Info()` call
-	// in a test for `if signal.Fulfilled == true`. This will block the Workflow
-	// until a Signal is received on the `signalChan` defined above.
+	// in a test for `if signal.Fulfilled == true`.
+	// This won't run until a Signal is received because `signalChan.Receive` above blocks.
 	err := workflow.ExecuteActivity(ctx, Activity, input).Get(ctx, &result)
 	if err != nil {
 		logger.Error("Activity failed.", "Error", err)
