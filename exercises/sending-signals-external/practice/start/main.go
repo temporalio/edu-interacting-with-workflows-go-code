@@ -27,7 +27,7 @@ func main() {
 		TaskQueue: pizza.TaskQueueName,
 	}
 
-	fulfillOrderWorkflowOptions := client.StartWorkflowOptions{
+	signalFulfilledOptions := client.StartWorkflowOptions{
 		ID:        signalFulfilledID,
 		TaskQueue: pizza.TaskQueueName,
 	}
@@ -40,7 +40,7 @@ func main() {
 
 	// TODO Part D: Add another call to c.ExecuteWorkflow() that spawns the
 	// `FulfillOrderWorkflow`. You can use the call that spawns the `PizzaWorkflow`
-	// and the `fulfillOrderWorkflowOptions` block above as a reference.
+	// and the `signalFulfilledOptions` block above as a reference.
 	// Don't forget to capture the Workflow Execution and any errors in different variables.
 
 	var result pizza.OrderConfirmation

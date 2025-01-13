@@ -76,7 +76,7 @@ the `PizzaWorkflow`.
 2. Directly after the `c.ExecuteWorkflow()` call for the
    `PizzaWorkflow`, add another call that starts the `FulfillOrderWorkflow`. You
    can use the call that starts the `PizzaWorkflow` and the
-   `fulfillOrderWorkflowOptions` block as a reference. Don't forget to capture the
+   `signalFulfilledOptions` block as a reference. Don't forget to capture the
    Workflow Execution and any errors in different variables.
 2. Save and close the file.
 
