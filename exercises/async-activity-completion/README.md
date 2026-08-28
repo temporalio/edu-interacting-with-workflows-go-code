@@ -3,7 +3,7 @@
 During this exercise, you will:
 
 - Retrieve a task token from your Activity execution
-Throw an `ErrResultPending` to indicate that the Activity is waiting for an external completion.
+- Throw an `ErrResultPending` to indicate that the Activity is waiting for an external completion.
 - Use another Temporal Client to communicate the result of the asynchronous Activity back to the Workflow
 
 Make your changes to the code in the `practice` subdirectory (look for `TODO` comments that will guide you to where you should make changes to the code). If you need a hint or want to verify your changes, look at the complete version in the `solution` subdirectory.

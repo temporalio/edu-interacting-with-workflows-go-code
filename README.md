@@ -34,9 +34,7 @@ The following links provide additional information that you may find helpful as 
 
 ## Exercise Environment for this Course
 
-You can launch an exercise environment for this course in GitPod by
-clicking the button below:
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/temporalio/edu-interacting-with-workflows-go-code)
+You can launch an exercise environment for this course using GitHub Codespaces by 
+following [this](codespaces.md) walkthrough.
 
 Alternatively, you can perform these exercises directly on your computer. Refer to the instructions about setting up a local development environment, which you'll find in the "About this Course" chapter.

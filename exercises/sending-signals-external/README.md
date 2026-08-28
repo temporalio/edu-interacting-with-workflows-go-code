@@ -85,7 +85,7 @@ the `PizzaWorkflow`.
 At this point, you can run your Workflows.
 
 1. In one terminal, navigate to the `worker` subdirectory and run `go run main.go`.
-2. In another terminal, navigate to the `start` subdirectory and run `go run
+2. In another terminal, navigate to the `starter` subdirectory and run `go run
    main.go`. You should receive output from both Workflows having started and
    returning the expected result:
 

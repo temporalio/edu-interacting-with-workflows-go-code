@@ -9,7 +9,7 @@ This example shows how custom Search Attributes can be used in your Workflow. Th
 
 ## Part B: Setting a Custom Search Attribute Value While Starting a Workflow
 
-This is not a necessary step. In the `start/main.go` file, you can set Custom Search Attribute by adding them to the options when starting a Workflow execution using [`WorkflowOptions.TypedSearchAttributes`](https://docs.temporal.io/dev-guide/go/observability#custom-search-attributes). 
+This is not a necessary step. In the `starter/main.go` file, you can set Custom Search Attribute by adding them to the options when starting a Workflow execution using [`WorkflowOptions.TypedSearchAttributes`](https://docs.temporal.io/dev-guide/go/observability#custom-search-attributes).
 
 Keep in mind that setting attributes is optional in some attributes' case, and this is more for setting Search Attributes that are known at the start of the Workflow or may not change through the Workflow logic.
 
