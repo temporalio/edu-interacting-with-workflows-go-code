@@ -16,7 +16,10 @@ the complete version in the `solution` subdirectory.
 
 In this part of the exercise, you will define your Query.
 
-1. Edit the `workflow.go` file. You will use the `workflow.SetQueryHandler()` to add Query handling to your Workflow. This can be done anywhere inside of the `Workflow()` function. In this case, you'll add a query to return the Workflow's `currentState`, so it makes sense to initialize the `currentState` variable as you go along. Note that this is the same Workflow from the previous exercise, so it is designed to wait for a Signal after starting.
+1. Edit the `workflow.go` file.
+
+You will use the `workflow.SetQueryHandler()` to add Query handling to your Workflow. This can be done anywhere inside of the `Workflow()` function. In this case, you'll add a query to return the Workflow's `currentState`, which you'll modify as the Workflow progresses. Note that this is the same Workflow from the previous exercise, so it is designed to wait for a Signal after starting.
+
 2. Set up two string variables, `currentState := "started"` and `queryType := "current_state"`. One of these will contain the type of your Query, which will not change. The other will contain the `currentState` that is progressively updated and will be returned by the Query.
 3. Next, add the `workflow.SetQueryHandler()` function with the necessary error handling:
 
@@ -30,8 +33,10 @@ if err != nil {
 }
 ```
 
-4. Finally, update `currentState` again after that block of code, to something like "waiting for signal". This is the state that the Workflow will be waiting at when we query it.
-5. Save the file.
+4. Update `currentState` again after that block of code, to something like "waiting for signal". This is the state that the Workflow will be waiting at when we query it.
+5. Finally, update `currentState` to something like `"Workflow Complete"`
+   after the Activity has completed successfully near where the Workflow completion is logged.
+6. Save the file.
 
 ## Part B: Performing a Query from a Client
 
@@ -41,7 +46,7 @@ In this part of the exercise, you will create another Temporal client that sends
 2. Within the `main()` block, add the `client.QueryWorkflow()` function with the necessary parameters and error handling:
 
 ```go
-response, err := c.QueryWorkflow(context.Background(), "queries", "", "current_state")
+response, err := c.QueryWorkflow(context.Background(), "queries-workflow-id", "", "current_state")
 if err != nil {
    log.Fatalln("Error sending the Query", err)
    return
@@ -67,8 +72,8 @@ At this point, you can run your Workflow. Because it is the same Workflow from t
 
 ```
 2024/03/14 08:48:10 INFO  No logger configured for temporal client. Created default one.
-2024/03/14 08:48:10 INFO  Started Worker Namespace default TaskQueue queries WorkerID 43388@Omelas@
-2024/03/14 08:48:21 INFO  Query workflow started Namespace default TaskQueue queries WorkerID 43388@Omelas@ WorkflowType Workflow WorkflowID queries RunID 905330da-9c0f-490e-bd48-c6a9e8840f7a Attempt 1 input Plain text input
+2024/03/14 08:48:10 INFO  Started Worker Namespace default TaskQueue queries-task-queue WorkerID 43388@Omelas@
+2024/03/14 08:48:21 INFO  Query workflow started Namespace default TaskQueue queries-task-queue WorkerID 43388@Omelas@ WorkflowType Workflow WorkflowID queries-workflow-id RunID 905330da-9c0f-490e-bd48-c6a9e8840f7a Attempt 1 input Plain text input
 ```
 
 1. You can now Query your Workflow. In a third terminal, run `go run queryclient/main.go`. It will send a Query to your Workflow, which will immediately return the Query result:
@@ -85,7 +90,7 @@ To send a Query from the CLI, use `temporal workflow query` with the same parame
 
 ```bash
 temporal workflow query \
-    --workflow-id="queries" \
+    --workflow-id="queries-workflow-id" \
     --type="current_state"
 ```
 
@@ -96,15 +101,20 @@ Query result:
 ["waiting for signal"]
 ```
 
-Now you can send a Signal to your Workflow as in the previous exercise so it completes successfully. In the terminal you sent your Query from, run `go run signalclient/main.go`.
+Now you can send a Signal to your Workflow as in the previous exercise so it completes successfully.
+
+1. In the terminal you sent your Query from, run `go run signalclient/main.go`.
 
 ## Part E: Querying a Completed Workflow
 
-Finally, you can demonstrate querying completed Workflows. Update the `currentState` variable in `workflow.go` once more just before the Workflow returns, so that you can demonstrate querying a completed workflow. Then, re-run the workflow, and query it from the command line again:
+Now that the Workflow has been signalled, it has completed, and you
+can demonstrate querying completed Workflows.
+
+1. Query it from the command line again:
 
 ```bash
 temporal workflow query \
-    --workflow-id="queries" \
+    --workflow-id="queries-workflow-id" \
     --type="current_state"
 ```
 

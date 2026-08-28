@@ -16,7 +16,7 @@ func main() {
 	}
 	defer c.Close()
 
-	w := worker.New(c, "queries", worker.Options{})
+	w := worker.New(c, "queries-task-queue", worker.Options{})
 
 	w.RegisterWorkflow(queries.Workflow)
 	w.RegisterActivity(queries.Activity)
